@@ -1,16 +1,30 @@
+import time
 import secondary as m
-piece,turn,r=[" ","X","O"],1,[0,0,0,0,0,0,0,0,0]
-m.tablePrint(r,piece)
-b=m.rowsCalc(r,turn)
-while b:
-  a=int(input("Enter objective square:\n"))-1
-  while not r[a]==0:
-    a=int(input("The square you have selected is already occupied, please enter a valid objective coordinate:\n"))-1
-  r=m.newPiece(a,turn,r)
-  m.tablePrint(r,piece)
-  if not m.rowsCalc(r,turn):
-    print("Player "+str(turn)+" (using "+str(piece[turn])+" pieces) won!")
-  b=m.rowsCalc(r,turn)
-  turn=2 if turn==1 else 1
-
-  
+import random as q
+d=int(input("Enter number of games desired:\t"))
+h=time.clock_gettime(time.CLOCK_REALTIME) 
+f="dXO"
+while not d==0:
+  g=""
+  b=True
+  u=1
+  t=0
+  r=[0,0,0,0,0,0,0,0,0]
+  while b:
+    n=m.aV(r)
+    if len(n)<2:
+      b=False
+    a=n[q.randint(0,len(n)-1)]
+    g+=str(a+1)
+    r=m.nP(a,u,r)
+    if not m.rC(r,u):
+      t=u
+      b=False
+    elif u==1:
+      u=2
+    else:
+      u=1
+  m.oP(g+"-"+f[t])
+  d-=1
+j=time.clock_gettime(time.CLOCK_REALTIME)-h
+print(j)

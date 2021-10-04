@@ -1,16 +1,56 @@
-import secondary as m
-piece,turn,r=[" ","X","O"],1,[0,0,0,0,0,0,0,0,0]
-m.tablePrint(r,piece)
-b=m.rowsCalc(r,turn)
-while b:
-  a=int(input("Enter objective square:\n"))-1
-  while not r[a]==0:
-    a=int(input("The square you have selected is already occupied, please enter a valid objective coordinate:\n"))-1
-  r=m.newPiece(a,turn,r)
-  m.tablePrint(r,piece)
-  if not m.rowsCalc(r,turn):
-    print("Player "+str(turn)+" (using "+str(piece[turn])+" pieces) won!")
-  b=m.rowsCalc(r,turn)
-  turn=2 if turn==1 else 1
-
-  
+import time
+import random as q
+def rC(r, u):
+  w=(u, u, u)
+  if (r[0],r[1],r[2]) == w or (r[3],r[4],r[5]) == w or (r[6],r[7],r[8]) == w or (r[0],r[3],r[6]) == w or (r[1],r[4],r[7]) == w or (r[2],r[5],r[8]) == w or (r[0],r[4],r[8]) == w or (r[2],r[4],r[6]) == w:
+    return False
+  else:
+    return True
+def nP(a,u,r):
+  k=[]
+  o=0
+  for i in r:
+    if o==a:
+      k.append(u)
+    else:
+      k.append(i)
+    o+=1
+  return k
+def oP(x):
+  m=open("0.txt", "a")
+  m.write(x+"\n")
+  m.close()
+def aV(r):
+  c,l=0,[]
+  for i in r:
+    if i==0:
+      l.append(c)
+    c+=1
+  return l
+d=int(input("Enter number of games desired:\t"))
+h=time.clock_gettime(time.CLOCK_REALTIME) 
+f="dXO"
+while not d==0:
+  g=""
+  b=True
+  u=1
+  t=0
+  r=[0,0,0,0,0,0,0,0,0]
+  while b:
+    n=aV(r)
+    if len(n)<2:
+      b=False
+    a=n[q.randint(0,len(n)-1)]
+    g+=str(a+1)
+    r=nP(a,u,r)
+    if not rC(r,u):
+      t=u
+      b=False
+    elif u==1:
+      u=2
+    else:
+      u=1
+  oP(g+"-"+f[t])
+  d-=1
+j=time.clock_gettime(time.CLOCK_REALTIME)-h
+print(j)
